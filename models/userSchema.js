@@ -25,12 +25,6 @@ const userSchema = new mongoose.Schema({
     minLength: [11, "Phone Number Must Contain Exact 11 Digits!"],
     maxLength: [11, "Phone Number Must Contain Exact 11 Digits!"],
   },
-  nic: {
-    type: String,
-    required: [true, "NIC Is Required!"],
-    minLength: [13, "NIC Must Contain Only 13 Digits!"],
-    maxLength: [13, "NIC Must Contain Only 13 Digits!"],
-  },
   dob: {
     type: Date,
     required: [true, "DOB Is Required!"],
@@ -58,19 +52,21 @@ const userSchema = new mongoose.Schema({
     public_id: String,
     url: String,
   },
-});
+},{timestamps:true});
 
+
+// save hone se pehle 
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
     next();
   }
   this.password = await bcrypt.hash(this.password, 10);
 });
-
+// for comparing password 
 userSchema.methods.comparePassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
-
+// for generating token when user log in
 userSchema.methods.generateJsonWebToken = function () {
   return jwt.sign({ id: this._id }, process.env.JWT_SECRET_KEY, {
     expiresIn: process.env.JWT_EXPIRES,

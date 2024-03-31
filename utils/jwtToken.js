@@ -7,6 +7,7 @@ export const generateToken = (user, message, statusCode, res) => {
       .status(statusCode)
       .cookie(cookieName, token, {
         expires: new Date(
+          // 7 d 
           Date.now() + process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000
         ),
         httpOnly: true,

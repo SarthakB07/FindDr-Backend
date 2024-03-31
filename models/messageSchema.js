@@ -15,7 +15,7 @@ const messageSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    validate: [validator.isEmail, "Provide A Valid Email!"],
+    validate: [validator.isEmail, "Pls Provide A Valid Email!"],
   },
   phone: {
     type: String,
@@ -28,6 +28,6 @@ const messageSchema = new mongoose.Schema({
     required: true,
     minLength: [10, "Message Must Contain At Least 10 Characters!"],
   },
-});
+},{timestamps:true});
 
 export const Message = mongoose.model("Message", messageSchema);
