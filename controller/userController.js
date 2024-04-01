@@ -5,7 +5,7 @@ import { generateToken } from "../utils/jwtToken.js";
 import cloudinary from "cloudinary";
 
 export const patientRegister = catchAsyncErrors(async (req, res, next) => {
-  const { firstName, lastName, email, phone,dob, gender, password } =
+  const { firstName, lastName, email, phone, dob, gender, password } =
     req.body;
   if (
     !firstName ||
@@ -59,11 +59,11 @@ export const login = catchAsyncErrors(async (req, res, next) => {
   if (role !== user.role) {
     return next(new ErrorHandler(`User Not Found With This Role!`, 400));
   }
-  generateToken(user, "Login Successfully!", 200, res);
+  generateToken(user, "Login Successfully!", 201, res);
 });
 
 export const addNewAdmin = catchAsyncErrors(async (req, res, next) => {
-  const { firstName, lastName, email, phone,dob, gender, password } =
+  const { firstName, lastName, email, phone, dob, gender, password } =
     req.body;
   if (
     !firstName ||

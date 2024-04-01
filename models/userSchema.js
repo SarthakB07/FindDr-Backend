@@ -52,7 +52,7 @@ const userSchema = new mongoose.Schema({
     public_id: String,
     url: String,
   },
-},{timestamps:true});
+});
 
 
 // save hone se pehle 
