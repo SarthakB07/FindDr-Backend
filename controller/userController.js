@@ -4,14 +4,16 @@ import ErrorHandler from "../middlewares/error.js";
 import { generateToken } from "../utils/jwtToken.js";
 import cloudinary from "cloudinary";
 
+// registering patient
 export const patientRegister = catchAsyncErrors(async (req, res, next) => {
-  const { firstName, lastName, email, phone, dob, gender, password } =
+  const { firstName, lastName, email, phone, nic,dob, gender, password } =
     req.body;
   if (
     !firstName ||
     !lastName ||
     !email ||
     !phone ||
+    !nic ||
     !dob ||
     !gender ||
     !password
@@ -29,6 +31,7 @@ export const patientRegister = catchAsyncErrors(async (req, res, next) => {
     lastName,
     email,
     phone,
+    nic,
     dob,
     gender,
     password,
@@ -37,6 +40,7 @@ export const patientRegister = catchAsyncErrors(async (req, res, next) => {
   generateToken(user, "User Registered!", 200, res);
 });
 
+// login part 
 export const login = catchAsyncErrors(async (req, res, next) => {
   const { email, password, confirmPassword, role } = req.body;
   if (!email || !password || !confirmPassword || !role) {
@@ -62,14 +66,17 @@ export const login = catchAsyncErrors(async (req, res, next) => {
   generateToken(user, "Login Successfully!", 201, res);
 });
 
+// Adding new Admin
+
 export const addNewAdmin = catchAsyncErrors(async (req, res, next) => {
-  const { firstName, lastName, email, phone, dob, gender, password } =
+  const { firstName, lastName, email, phone,nic, dob, gender, password } =
     req.body;
   if (
     !firstName ||
     !lastName ||
     !email ||
     !phone ||
+    !nic ||
     !dob ||
     !gender ||
     !password
@@ -87,6 +94,7 @@ export const addNewAdmin = catchAsyncErrors(async (req, res, next) => {
     lastName,
     email,
     phone,
+    nic,
     dob,
     gender,
     password,
@@ -98,6 +106,8 @@ export const addNewAdmin = catchAsyncErrors(async (req, res, next) => {
     admin,
   });
 });
+
+// Adding new Doctor
 
 export const addNewDoctor = catchAsyncErrors(async (req, res, next) => {
   if (!req.files || Object.keys(req.files).length === 0) {
@@ -113,6 +123,7 @@ export const addNewDoctor = catchAsyncErrors(async (req, res, next) => {
     lastName,
     email,
     phone,
+    nic,
     dob,
     gender,
     password,
@@ -123,6 +134,7 @@ export const addNewDoctor = catchAsyncErrors(async (req, res, next) => {
     !lastName ||
     !email ||
     !phone ||
+    !nic ||
     !dob ||
     !gender ||
     !password ||
@@ -154,6 +166,7 @@ export const addNewDoctor = catchAsyncErrors(async (req, res, next) => {
     lastName,
     email,
     phone,
+    nic,
     dob,
     gender,
     password,
@@ -170,7 +183,7 @@ export const addNewDoctor = catchAsyncErrors(async (req, res, next) => {
     doctor,
   });
 });
-
+// for getting all doctors
 export const getAllDoctors = catchAsyncErrors(async (req, res, next) => {
   const doctors = await User.find({ role: "Doctor" });
   res.status(200).json({
@@ -178,7 +191,7 @@ export const getAllDoctors = catchAsyncErrors(async (req, res, next) => {
     doctors,
   });
 });
-
+// getting user details
 export const getUserDetails = catchAsyncErrors(async (req, res, next) => {
   const user = req.user;
   res.status(200).json({
